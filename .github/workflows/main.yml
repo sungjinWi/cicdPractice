@@ -77,7 +77,7 @@ jobs:
   deploy:
     needs: build
     # ec2에 설치한 Runner로 job 실행
-    runs-on: [self-hosted, sungjin-label ]
+    runs-on: self-hosted
     # 위처럼 하니 permission denied로 로그인이 안됨
     # runs-on: ubuntu-22.04
 
