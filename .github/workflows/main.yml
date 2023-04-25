@@ -77,7 +77,8 @@ jobs:
   deploy:
     needs: build
     # ec2에 설치한 Runner로 job 실행
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
+    # 위처럼 바꾸면서 runner는 자동인식으로 해결됨 하지만 ghcr 로그인 문제발생
     # runs-on: [self-hosted, label-vog ]
 
     # Github Container Registry 로그인
@@ -89,7 +90,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.VOG_GHCR_TOKEN }}
+        password: ${{ secrets.SUNGJIN_GHCR_TOKEN }}
     - name: Run docker
       run: /
           docker stop ${{ env.DOCKER_CONTAINER }} && docker rm ${{ env.DOCKER_CONTAINER }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest 
