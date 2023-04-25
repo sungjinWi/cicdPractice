@@ -77,9 +77,7 @@ jobs:
   deploy:
     needs: build
     # ec2에 설치한 Runner로 job 실행
-    runs-on: ubuntu-22.04
-    # 위처럼 바꾸면서 runner는 자동인식으로 해결됨 하지만 ghcr 로그인 문제발생
-    # runs-on: [self-hosted, label-vog ]
+    runs-on: [self-hosted, sungjin ]
 
     # Github Container Registry 로그인
     # Docker Container 중지 및 삭제, Docker image 삭제
