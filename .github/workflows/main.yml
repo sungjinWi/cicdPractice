@@ -77,9 +77,9 @@ jobs:
   deploy:
     needs: build
     # ec2에 설치한 Runner로 job 실행
-    runs-on: self-hosted
-    # 위처럼 하니 permission denied로 로그인이 안됨
-    # runs-on: ubuntu-22.04
+    # runs-on: self-hosted
+    #  wsl runner는 docker가 깔려있지 않았고 aws의 runner는 permission denied
+    runs-on: ubuntu-22.04
 
     # Github Container Registry 로그인
     # Docker Container 중지 및 삭제, Docker image 삭제
