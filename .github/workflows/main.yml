@@ -3,8 +3,11 @@
 name: SUNGJIN_NEST_CICD
 # 환경변수
 env:
-  DOCKER_IMAGE: ghcr.io/${{ secrets.VOG_NEST_GITHUB_ACTOR }}/vog-api-server-img 
-  DOCKER_CONTAINER: vog-api-server
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  # github.repository=sungjinwi/sungjin_nest  owner/repository로 구성
+  # DOCKER_IMAGE: ghcr.io/${{ github.actor }}/sungjin_nest 
+  DOCKER_CONTAINER: sungjin_api_server
 
 #이벤트
 # main 브랜치에 한하여 push가 일어날 경우
@@ -20,8 +23,8 @@ on:
 jobs:
   # 프로젝트 코드 테스트 With Jest 
   test:
-    # ubuntu-20.04 환경의 Runner에서 실행
-    runs-on: ubuntu-20.04
+    # ubuntu-22.04 환경의 Runner에서 실행
+    runs-on: ubuntu-22.04
 
     # 컨테이너에 repository의 코드를 checkout 
     # node 환경 셋업
@@ -37,17 +40,18 @@ jobs:
       - run: npm install
       - run: npm run test:e2e
 
-  #도커 이미지 빌드
+  # 도커 이미지 빌드
 
   build:
 
-    #build가 시작되려면 test가 완료되어야 함
+    # build가 시작되려면 test가 완료되어야 함
     needs: test
     runs-on: ubuntu-22.04
-    #Runner 에 repository의 코드를 checkout
-    #컨테이너에 도커 환경 셋업
-    #Github Container Registry 로그인
-    #도커 이미지 빌드 후 ghcr에 push
+
+    # Runner 에 repository의 코드를 checkout
+    # 컨테이너에 도커 환경 셋업
+    # Github Container Registry 로그인
+    # 도커 이미지 빌드 후 ghcr에 push
 
     steps:
     - name: Checkout Source Code
@@ -58,7 +62,7 @@ jobs:
     - name: Login to ghcr
       uses: docker/login-action@v2 
       with:
-        registry: ghcr.io
+        registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.SUNGJIN_GHCR_TOKEN }}
     - name: Build and Push
@@ -66,7 +70,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ${{ env.DOCKER_IMAGE }}:latest
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
   # ec2 환경에 배포
 
