@@ -92,6 +92,6 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.SUNGJIN_GHCR_TOKEN }}
     - name: Run docker
-      run: /
+      run: |
           docker stop ${{ env.DOCKER_CONTAINER }} && docker rm ${{ env.DOCKER_CONTAINER }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest 
           docker run -d -p 80:3000 --name ${{ env.DOCKER_CONTAINER }} --restart always ${{ env.DOCKER_IMAGE }}:latest
