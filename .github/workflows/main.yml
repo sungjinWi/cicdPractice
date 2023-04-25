@@ -77,8 +77,9 @@ jobs:
   deploy:
     needs: build
     # ec2에 설치한 Runner로 job 실행
-    # runs-on: [self-hosted, sungjin-label ]
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, sungjin-label ]
+    # 위처럼 하니 permission denied로 로그인이 안됨
+    # runs-on: ubuntu-22.04
 
     # Github Container Registry 로그인
     # Docker Container 중지 및 삭제, Docker image 삭제
